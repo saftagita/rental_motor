@@ -11,4 +11,10 @@ class Booking extends Model
 
     // kolom mana saja yang boleh diisi massal
     protected $fillable = ['nama', 'telp', 'tanggal_mulai', 'tanggal_selesai'];
+
+    // relasi ke model Product
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

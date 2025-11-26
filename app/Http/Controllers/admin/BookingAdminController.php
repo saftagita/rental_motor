@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class BookingController extends Controller
+class BookingAdminController extends Controller
 {
-   public function index() {
-    $bookings = Booking::all();
-    return view('admin', compact('bookings'));
-}
-
+    public function index()
+    {
+        $bookings = Booking::with('product')->get();
+        return view('pages.admin.booking.booking', compact('bookings'));
+    }
 
     public function store(Request $request)
     {

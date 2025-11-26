@@ -1,44 +1,54 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\admin\BookingAdminController;
+use App\Http\Controllers\admin\ProductAdminController;
+use App\Http\Controllers\user\ProductUserController;
+
+use App\Http\Controllers\AuthController;
+
+// auth
+// register
+Route::get('/', [AuthController::class, 'showRegister'])->name('register.form');
+Route::post('/', [AuthController::class, 'submitRegister'])->name('register.submit');
+// login
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login.form');
+Route::post('/login', [AuthController::class, 'submitLogin'])->name('login.submit');
+// logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// user
 Route::get('/home', function() {
-    return view('home');
-});
-Route::get('/product', function () {
-    return view('product');
-});
+    return view('pages.user.home');
+})->name('user.home');
+
+Route::get('/product', [ProductUserController::class, 'index'])->name('user.product.index');
+
 Route::get('/booking', function () {
-    return view('booking');
-});
+    return view('pages.user.booking');
+})->name('booking.form');
+
 Route::get('/about', function () {
-    return view('about');
+    return view('pages.user.about');
 });
+
 Route::get('/contact', function () {
-    return view('contact');
-});
-Route::get('/Admin/product/index', function () {
-    return view('Admin.product.index');
+    return view('pages.user.contact');
 });
 
-Route::get('/Admin/product/create', function () {
-    return view('Admin.product.create');
-});
-Route::get('/Admin/product/edit', function () {
-    return view('Admin.product.edit');
-});
-
-// CRUD Booking Motor
-Route::get('/admin', [BookingController::class, 'index'])->name('admin');
-Route::post('/admin/store', [BookingController::class, 'store'])->name('booking.store');
-Route::get('/admin/delete/{id}', [BookingController::class, 'delete'])->name('booking.delete');
+// admin
+// admin booking
+Route::get('/admin/booking', [BookingAdminController::class, 'index'])->name('admin.booking.index');
+Route::post('/admin/booking/store', [BookingAdminController::class, 'store'])->name('admin.booking.store');
+Route::get('/admin/booking/delete/{id}', [BookingAdminController::class, 'delete'])->name('admin.booking.delete');
 
 // admin product
-Route::get('/Admin/product', [ProductController::class, 'index'])->name('product.index');
-Route::get('/Admin/product/create', [ProductController::class, 'create'])->name('product.create');
-Route::post('/Admin/product/store', [ProductController::class, 'store'])->name('product.store');
-Route::get('/Admin/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
-Route::post('/Admin/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
-Route::post('/Admin/product/delete/{id}', [ProductController::class, 'destroy'])->name('product.delete');
+Route::resource('admin/product', ProductAdminController::class)->names([
+    'index' => 'admin.product.index',
+    'create' => 'admin.product.create',
+    'store' => 'admin.product.store',
+    'show' => 'admin.product.show',
+    'edit' => 'admin.product.edit',
+    'update' => 'admin.product.update',
+    'destroy' => 'admin.product.destroy',
+]);

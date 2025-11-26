@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Booking Motor</title>
+@extends('layout.app')
 
+@section('title', 'Booking Form')
+
+@push('styles')
     <style>
-        body {
-            background: #F5F5F5;
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
-
         .container {
             width: 500px;
             margin: 60px auto;
             background: white;
             padding: 40px 45px;
             border-radius: 18px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
         .container h2 {
@@ -97,11 +91,9 @@
             background: #B2B2B2;
         }
     </style>
-</head>
-<body>
+@endpush
 
-    <div class="container">
-
+@section('content')
         <h2>FORM BOOKING</h2>
         <p>Isi form di bawah ini untuk melakukan booking</p>
 
@@ -136,11 +128,4 @@
 
         <!-- BUTTON CANCEL -->
         <a href="/product" class="btn-cancel">CANCEL</a>
-
-    </div>
-
-{{-- FOOTER --}}
-@include('layout.footer')
-
-</body>
-</html>
+@endsection

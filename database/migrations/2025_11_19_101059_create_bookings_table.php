@@ -17,6 +17,7 @@ return new class extends Migration
         $table->string('telp');
         $table->date('tanggal_mulai');
         $table->date('tanggal_selesai');
+        $table->foreignId('product_id')->constrained()->onDelete('cascade');
         $table->timestamps();
     });
 }

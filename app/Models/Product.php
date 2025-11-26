@@ -12,4 +12,10 @@ class Product extends Model
         'foto',
         'deskripsi',
     ];
+
+    // relasi ke model Booking
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }
