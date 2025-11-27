@@ -105,7 +105,7 @@
                 <img src="{{ asset('storage/' . $p->foto) }}">
                 <h3>{{ $p->nama }}</h3>
                 <div class="price">Rp. {{ number_format($p->harga, 0, ',', '.') }}/hari</div>
-                <a href="{{ route('booking.form') }}" class="btn-book">BOOKING SEKARANG</a>
+                <a href="{{ route('booking.create') }}" class="btn-book">BOOKING SEKARANG</a>
             </div>
             @empty
             <p>No products available.</p>

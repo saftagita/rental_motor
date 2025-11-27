@@ -3,129 +3,123 @@
 @section('title', 'Booking Form')
 
 @push('styles')
-    <style>
-        .container {
-            width: 500px;
-            margin: 60px auto;
-            background: white;
-            padding: 40px 45px;
-            border-radius: 18px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        }
+<style>
+.container {
+    width: 500px;
+    margin: 60px auto;
+    background: white;
+    padding: 40px 45px;
+    border-radius: 18px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
 
-        .container h2 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: bold;
-        }
+.container h2 { 
+    font-size: 24px; 
+    font-weight: bold; 
+    margin-bottom: 5px; 
+}
+.container p { 
+    font-size: 14px; 
+    margin-bottom: 25px; 
+    color: #555; 
+}
 
-        .container p {
-            margin-top: 5px;
-            font-size: 14px;
-            color: #555;
-        }
+label { 
+    font-weight: bold; 
+    margin-top: 20px; 
+    display: block; 
+}
+.input-box {
+    width: 100%; 
+    padding: 14px; 
+    margin-top: 8px; 
+    border: none; 
+    border-radius: 8px;
+    background: #EFEFEF; 
+    font-size: 14px; 
+    box-sizing: border-box;
+}
 
-        label {
-            font-weight: bold;
-            font-size: 14px;
-            display: block;
-            margin-top: 25px;
-        }
+.btn-submit, .btn-cancel {
+    width: 100%; 
+    padding: 14px; 
+    border-radius: 10px; 
+    font-size: 16px; 
+    text-align: center;
+    cursor: pointer;
+    margin-top: 15px;
+    display: block;
+    text-decoration: none;
+}
 
-        .input-box {
-            width: 100%;
-            padding: 14px;
-            border-radius: 8px;
-            border: none;
-            background: #EFEFEF;
-            font-size: 14px;
-            margin-top: 8px;
-            box-sizing: border-box;
-        }
+.btn-submit {
+    background: #0F1B33; 
+    color: white; 
+    border: none;
+}
+.btn-submit:hover { 
+    background: #152544; 
+}
 
-        .row {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
-        }
+.btn-cancel {
+    background: #C6C6C6; 
+    color: #333; 
+    border: none;
+}
+.btn-cancel:hover { 
+    background: #B2B2B2; 
+}
 
-        .row .input-box {
-            flex: 1;
-        }
-
-        /* ---------- BUTTON STYLE ---------- */
-        .btn-submit,
-        .btn-cancel {
-            width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            font-weight: 600;
-            display: block;
-            box-sizing: border-box;
-        }
-
-        .btn-submit {
-            margin-top: 40px;
-            background: #0F1B33;
-            border: none;
-            font-size: 16px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .btn-submit:hover {
-            background: #152544;
-        }
-
-        .btn-cancel {
-            margin-top: 15px;
-            background: #C6C6C6;
-            border: none;
-            font-size: 15px;
-            color: #333;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .btn-cancel:hover {
-            background: #B2B2B2;
-        }
-    </style>
+.alert-success { 
+    background: #D1F2D1; 
+    padding: 12px 15px; 
+    border-radius: 8px; 
+    color: #145A32; 
+    margin-bottom: 20px; 
+    font-size: 14px; 
+    text-align: center;
+}
+</style>
 @endpush
 
 @section('content')
-        <h2>FORM BOOKING</h2>
-        <p>Isi form di bawah ini untuk melakukan booking</p>
+<div class="container">
 
-        <!-- FORM BOOKING -->
-        <form action="{{ route('booking.store') }}" method="POST">
-            @csrf
+    <h2>FORM BOOKING</h2>
+    <p>Isi form di bawah ini untuk melakukan booking</p>
 
-            <!-- NAMA -->
-            <label>Nama Lengkap</label>
-            <input type="text" name="nama" class="input-box" placeholder="Masukkan Nama Lengkap" required>
+    @if (session('success'))
+        <div class="alert-success">{{ session('success') }}</div>
+    @endif
 
-            <!-- TELEPON -->
-            <label>Nomor Telepon/Whatsapp</label>
-            <input type="text" name="telp" class="input-box" placeholder="08xx-xxxx-xxxx" required>
+    <form action="{{ route('booking.store') }}" method="POST">
+        @csrf
 
-            <!-- TANGGAL MULAI -->
-            <label>Tanggal Mulai</label>
-            <div class="row">
-                <input type="date" name="tanggal_mulai" class="input-box" required>
-            </div>
+        <label>Pilih Produk</label>
+        <select name="product_id" class="input-box" required>
+            <option value="">-- Pilih Produk --</option>
+            @foreach ($products as $p)
+                <option value="{{ $p->id }}">{{ $p->nama }} - Rp{{ number_format($p->harga) }}</option>
+            @endforeach
+        </select>
 
-            <!-- TANGGAL SELESAI -->
-            <label>Tanggal Selesai</label>
-            <div class="row">
-                <input type="date" name="tanggal_selesai" class="input-box" required>
-            </div>
+        <label>Nama Lengkap</label>
+        <input type="text" name="nama" class="input-box" placeholder="Masukkan Nama Lengkap" required>
 
-            <!-- BUTTON SUBMIT -->
-            <button type="submit" class="btn-submit">KONFIRMASI BOOKING</button>
+        <label>Nomor Telepon/Whatsapp</label>
+        <input type="text" name="telp" class="input-box" placeholder="08xx-xxxx-xxxx" required>
 
-        </form>
+        <label>Tanggal Mulai</label>
+        <input type="date" name="tanggal_mulai" class="input-box" required>
 
-        <!-- BUTTON CANCEL -->
-        <a href="/product" class="btn-cancel">CANCEL</a>
+        <label>Tanggal Selesai</label>
+        <input type="date" name="tanggal_selesai" class="input-box" required>
+
+        <button type="submit" class="btn-submit">KONFIRMASI BOOKING</button>
+    </form>
+    <a href="/product" class="btn-cancel">CANCEL</a>
+
+
+</div>
 @endsection

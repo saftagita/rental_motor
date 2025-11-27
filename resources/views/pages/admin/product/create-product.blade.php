@@ -98,7 +98,7 @@
         <p>Isi form di bawah ini untuk menambahkan produk</p>
 
         <!-- FORM PRODUCT -->
-        <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <!-- NAMA -->
@@ -126,5 +126,5 @@
         </form>
 
         <!-- BUTTON CANCEL -->
-        <a href="{{ route('product.index') }}" class="btn-cancel">CANCEL</a>
+        <a href="{{ route('admin.product.index') }}" class="btn-cancel">CANCEL</a>
 @endsection

@@ -15,11 +15,11 @@
                 Unit terawat, harga terjangkau, pelayanan cepat.
             </p>
 
-            <div style="margin-top: 15px; display: flex; gap: 12px;">
+            {{-- <div style="margin-top: 15px; display: flex; gap: 12px;">
                 <a href="#" style="font-size: 22px; color: white; text-decoration: none;">📘</a>
                 <a href="#" style="font-size: 22px; color: white; text-decoration: none;">📸</a>
                 <a href="#" style="font-size: 22px; color: white; text-decoration: none;">▶️</a>
-            </div>
+            </div> --}}
         </div>
 
         <!-- COLUMN 2 -->
@@ -29,13 +29,15 @@
             <a href="/product" style="color: #ccc; display: block; margin-bottom: 6px; text-decoration: none;">Product</a>
             <a href="/about" style="color: #ccc; display: block; margin-bottom: 6px; text-decoration: none;">About</a>
             <a href="/contact" style="color: #ccc; display: block; margin-bottom: 6px; text-decoration: none;">Contact</a>
+            <a href="/artikel" style="color: #ccc; display: block; margin-bottom: 6px; text-decoration: none;">Artikel</a>
+
         </div>
 
         <!-- COLUMN 3 -->
         <div>
             <h3 style="margin-bottom: 10px;">Contact Us</h3>
             <p style="color: #ccc; margin: 0;">📍 Bogor, Jawa Barat</p>
-            <p style="color: #ccc; margin: 6px 0;">📞 +62 812-3456-7890</p>
+            <p style="color: #ccc; margin: 6px 0;">📞 +62 951-7746-543</p>
             <p style="color: #ccc; margin: 6px 0;">✉ admin@asmotogo.com</p>
 
             <div style="margin-top: 15px;">

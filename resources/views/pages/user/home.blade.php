@@ -59,7 +59,7 @@
                 Unit bersih, kondisi prima, harga hemat, dan proses cepat.
             </p>
 
-            <a href="https://wa.me/628xxxxxxx" class="hero-btn">Chat Via WhatsApp</a>
+            <a href="/booking" class="hero-btn">Rent Now</a>
         </div>
 
         <img src="{{ asset('img/motor4.png') }}" alt="Motor">

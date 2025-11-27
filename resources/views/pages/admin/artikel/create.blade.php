@@ -1,6 +1,6 @@
 @extends('layout.admin')
 
-@section('title', 'Edit Product')
+@section('title', 'Product Form')
 
 @push('styles')
     <style>
@@ -98,16 +98,16 @@
         <p>Isi form di bawah ini untuk menambahkan produk</p>
 
         <!-- FORM PRODUCT -->
-        <form action="{{ route('admin.product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.artikel.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
 
             <!-- NAMA -->
             <label>Nama Motor</label>
-            <input type="text" name="nama" class="input-box" value="{{ old('nama', $product->nama) }}" required>
+            <input type="text" name="nama" class="input-box" placeholder="Masukkan Nama Lengkap" required>
+
             <!-- Harga -->
             <label>Harga</label>
-            <input type="text" name="harga" class="input-box" value="{{ old('harga', $product->harga) }}" required>
+            <input type="text" name="harga" class="input-box" placeholder="Masukkan Harga" required>
 
             <!-- Foto -->
             <label>Foto</label>
@@ -118,7 +118,7 @@
             <!-- Deskripsi -->
             <label>Deskripsi</label>
             <div class="row">
-                <input type="text" name="deskripsi" class="input-box" value="{{ old('deskripsi', $product->deskripsi) }}">
+                <input type="text" name="deskripsi" class="input-box" placeholder="Masukkan Deskripsi (Opsional)">
             </div>
 
             <!-- BUTTON SUBMIT -->
@@ -126,5 +126,5 @@
         </form>
 
         <!-- BUTTON CANCEL -->
-        <a href="{{ route('admin.product.index') }}" class="btn-cancel">CANCEL</a>
+        <a href="{{ route('admin.artikel.index') }}" class="btn-cancel">CANCEL</a>
 @endsection

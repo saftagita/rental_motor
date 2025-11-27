@@ -9,10 +9,15 @@ class Booking extends Model
 {
     use HasFactory;
 
-    // kolom mana saja yang boleh diisi massal
-    protected $fillable = ['nama', 'telp', 'tanggal_mulai', 'tanggal_selesai'];
+    protected $fillable = [
+        'product_id',
+        'nama',
+        'telp',
+        'tanggal_mulai',
+        'tanggal_selesai'
+    ];
 
-    // relasi ke model Product
+    // relasi ke Product
     public function product()
     {
         return $this->belongsTo(Product::class);

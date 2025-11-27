@@ -70,6 +70,7 @@
         <a href="/product">PRODUCT</a>
         <a href="/about">ABOUT</a>
         <a href="/contact">CONTACT</a>
+        <a href="/artikel">ARTIKEL</a>
     </div>
 
     @auth
