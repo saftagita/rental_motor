@@ -1,6 +1,6 @@
 @extends('layout.admin')
 
-@section('title', 'Product Management')
+@section('title', 'Artikel Management')
 
 @push('styles')
     <style>
@@ -75,47 +75,73 @@
             text-decoration: none;
             font-size: 14px;
         }
+
+        .alert {
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
     </style>
 @endpush
 
 @section('content')
     <div class="container">
+        @if(session('success'))
+            <div class="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="header">
-            <h2>Data Product</h2>
-            <a class="btn-primary" href="{{ route('admin.product.create') }}">Tambah Produk</a>
+            <h2>Data Artikel</h2>
+            <a class="btn-primary" href="{{ route('admin.artikel.create') }}">Tambah Artikel</a>
         </div>
 
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>judul</th>
+                    <th>Judul</th>
                     <th>Deskripsi</th>
-                    <th>Foto</th>
+                    <th>Gambar</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach ($artikels as $a)
+                @forelse ($artikels as $artikel)
                     <tr>
-                        <td>{{ $a->id }}</td>
-                        <td>{{ $a->judul }}</td>
-                        <td>{{ $a->deskripsi }}</td>
-                        <td><img src="{{ asset('storage/' . $a->gambar) }}" alt="{{ $a->judul }}" width="100"></td>
+                        <td>{{ $artikel->id }}</td>
+                        <td>{{ $artikel->judul }}</td>
+                        <td>{{ Str::limit($artikel->deskripsi, 50) }}</td>
+                        <td>
+                            @if($artikel->gambar)
+                                <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="{{ $artikel->judul }}" width="100">
+                            @else
+                                <span style="color: #999;">Tidak ada gambar</span>
+                            @endif
+                        </td>
                         
                         <td>
-                            <form action="{{ route('admin.product.destroy', $a->id) }}" method="POST" style="display:inline;">
+                            <a class="btn-action edit" href="{{ route('admin.artikel.edit', $artikel->id) }}">Edit</a>
+                            
+                            <form action="{{ route('admin.artikel.destroy', $artikel->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn-action hapus" onclick="return confirm('Yakin hapus data ini, Gita?')">
+                                <button type="submit" class="btn-action hapus" onclick="return confirm('Yakin hapus artikel ini?')">
                                     Hapus
                                 </button>
                             </form>
-                            <a class="btn-action edit" href="{{ route('admin.product.edit', $a->id) }}">Edit</a>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #999;">Belum ada artikel</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
 

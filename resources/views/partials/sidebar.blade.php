@@ -109,6 +109,9 @@
         <a href="{{ route('admin.product.index') }}" class="{{ request()->is('admin/product*') ? 'active' : '' }}">
             <span>Produk</span>
         </a>
+        <a href="{{ route('admin.artikel.index') }}" class="{{ request()->is('admin/artikel*') ? 'active' : '' }}">
+            <span>Artikel</span>
+        </a>
     </div>
 
     <div class="sidebar-footer">

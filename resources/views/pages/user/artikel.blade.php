@@ -5,7 +5,7 @@
 @push('styles')
 <style>
 .article-section {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 60px auto;
     padding: 0 20px;
 }
@@ -28,8 +28,20 @@
 
 .article-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+@media (max-width: 992px) {
+    .article-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .article-list {
+        grid-template-columns: 1fr;
+    }
 }
 
 .article-card {
@@ -58,13 +70,15 @@
 .article-card h3 {
     color: #0F1B33;
     margin-bottom: 10px;
-    font-size: 22px;
+    font-size: 20px;
+    line-height: 1.3;
 }
 
 .article-card p {
-    font-size: 16px;
-    color: #555;
-    line-height: 1.5;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
 }
 
 .read-more {
@@ -82,6 +96,22 @@
 .read-more:hover {
     background: #1c335a;
 }
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state h3 {
+    color: #0F1B33;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: #999;
+    font-size: 16px;
+}
 </style>
 @endpush
 
@@ -92,48 +122,29 @@
         <p>Tips, informasi, dan promo sewa motor untuk perjalananmu</p>
     </div>
 
-    <div class="article-list">
-        <!-- Artikel 1 -->
-        <div class="article-card">
-            <img src="{{ asset('img/rental1.png') }}" alt="Motor Matic">
-            <div class="content">
-                <h3>Tips Memilih Motor Matic untuk Sewa</h3>
-                <p>Pilih motor matic yang nyaman, irit bahan bakar, dan cocok untuk kota. Pastikan juga kondisi mesin prima.</p>
-               
-            </div>
+    @if($artikels->count() > 0)
+        <div class="article-list">
+            @foreach($artikels as $artikel)
+                <div class="article-card">
+                    @if($artikel->gambar)
+                        <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="{{ $artikel->judul }}">
+                    @else
+                        <img src="{{ asset('img/default-article.png') }}" alt="{{ $artikel->judul }}">
+                    @endif
+                    
+                    <div class="content">
+                        <h3>{{ $artikel->judul }}</h3>
+                        <p>{{ Str::limit($artikel->deskripsi, 100) }}</p>
+                        <a href="{{ route('user.artikel.show', $artikel->id) }}" class="read-more">Baca Selengkapnya</a>
+                    </div>
+                </div>
+            @endforeach
         </div>
-
-        <!-- Artikel 2 -->
-        <div class="article-card">
-            <img src="{{ asset('img/rental2.png') }}" alt="Motor Bebek">
-            <div class="content">
-                <h3>Motor Bebek: Pilihan Hemat dan Andal</h3>
-                <p>Motor bebek cocok untuk perjalanan jauh dengan harga sewa yang ramah di kantong. Tips merawat motor sebelum sewa.</p>
-                {{-- <a href="#" class="read-more">Baca Selengkapnya</a> --}}
-            </div>
+    @else
+        <div class="empty-state">
+            <h3>Belum Ada Artikel</h3>
+            <p>Artikel akan ditampilkan di sini ketika sudah tersedia</p>
         </div>
-
-        <!-- Artikel 3 -->
-        <div class="article-card">
-            <img src="{{ asset('img/rental.png') }}" alt="Promo Rental">
-            <div class="content">
-                <h3>Promo Spesial Rental Motor</h3>
-                <p>Dapatkan promo hemat setiap bulan! Cocok untuk mahasiswa dan wisatawan yang ingin sewa motor murah dan cepat.</p>
-              
-            </div>
-        </div>
-
-        <!-- Artikel 4 -->
-        <div class="article-card">
-            <img src="{{ asset('img/motor4.png') }}" alt="Motor Bersih">
-            <div class="content">
-                <h3>Keuntungan Sewa Motor Bersih dan Terawat</h3>
-                <p>Unit selalu bersih dan terawat memberikan pengalaman berkendara nyaman. Tips cek motor sebelum ambil sewa.</p>
-                
-            </div>
-        </div>
-    </div>
+    @endif
 </div>
-
-
 @endsection

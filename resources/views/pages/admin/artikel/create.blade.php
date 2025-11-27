@@ -1,6 +1,6 @@
 @extends('layout.admin')
 
-@section('title', 'Product Form')
+@section('title', 'Artikel Form')
 
 @push('styles')
     <style>
@@ -41,6 +41,11 @@
             font-size: 14px;
             margin-top: 8px;
             box-sizing: border-box;
+        }
+
+        textarea.input-box {
+            min-height: 100px;
+            resize: vertical;
         }
 
         .row {
@@ -94,35 +99,31 @@
 @endpush
 
 @section('content')
-        <h2>FORM PRODUCT</h2>
-        <p>Isi form di bawah ini untuk menambahkan produk</p>
+        <h2>FORM ARTIKEL</h2>
+        <p>Isi form di bawah ini untuk menambahkan artikel</p>
 
-        <!-- FORM PRODUCT -->
+        <!-- FORM ARTIKEL -->
         <form action="{{ route('admin.artikel.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
-            <!-- NAMA -->
-            <label>Nama Motor</label>
-            <input type="text" name="nama" class="input-box" placeholder="Masukkan Nama Lengkap" required>
+            <!-- Judul -->
+            <label>Judul Artikel</label>
+            <input type="text" name="judul" class="input-box" placeholder="Masukkan Judul Artikel" required>
 
-            <!-- Harga -->
-            <label>Harga</label>
-            <input type="text" name="harga" class="input-box" placeholder="Masukkan Harga" required>
-
-            <!-- Foto -->
-            <label>Foto</label>
+            <!-- Gambar -->
+            <label>Gambar</label>
             <div class="row">
-                <input type="file" name="foto" class="input-box" required>
+                <input type="file" name="gambar" class="input-box" required>
             </div>
 
             <!-- Deskripsi -->
             <label>Deskripsi</label>
             <div class="row">
-                <input type="text" name="deskripsi" class="input-box" placeholder="Masukkan Deskripsi (Opsional)">
+                <textarea name="deskripsi" class="input-box" placeholder="Masukkan Deskripsi Artikel"></textarea>
             </div>
 
             <!-- BUTTON SUBMIT -->
-            <button type="submit" class="btn-submit">KONFIRMASI PRODUCT</button>
+            <button type="submit" class="btn-submit">KONFIRMASI ARTIKEL</button>
         </form>
 
         <!-- BUTTON CANCEL -->

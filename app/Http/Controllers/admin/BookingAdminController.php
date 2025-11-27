@@ -10,7 +10,7 @@ class BookingAdminController extends Controller
 {
     public function index()
     {
-$bookings = Booking::with('product')->get();
+        $bookings = Booking::with('product')->get();
         return view('pages.admin.booking.booking', compact('bookings'));
     }
 

@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\BookingAdminController;
 use App\Http\Controllers\admin\ProductAdminController;
+use App\Http\Controllers\admin\ArtikelAdminController;
 use App\Http\Controllers\user\ProductUserController;
 use App\Http\Controllers\user\BookingUserController;
+use App\Http\Controllers\user\ArtikelUserController;
 use App\Http\Controllers\AuthController;
 
 
@@ -52,43 +54,9 @@ Route::get('/contact', function () {
     return view('pages.user.contact');
 })->name('user.contact');
 
-Route::get('/artikel', function () {
-    return view('pages.user.artikel');
-});
-
-
-// Halaman detail artikel
-Route::get('/artikel/{slug}', function ($slug) {
-    // buat data dummy artikel sesuai slug, bisa diganti dinamis nanti
-    $articles = [
-        'motor-matic' => [
-            'title' => 'Tips Memilih Motor Matic untuk Sewa',
-            'img' => 'motor1.jpg',
-            'content' => 'Pilih motor matic yang nyaman, irit bahan bakar, dan cocok untuk kota. Pastikan juga kondisi mesin prima. Jangan lupa cek rem, lampu, dan oli sebelum sewa untuk pengalaman berkendara yang aman dan nyaman.'
-        ],
-        'motor-bebek' => [
-            'title' => 'Motor Bebek: Pilihan Hemat dan Andal',
-            'img' => 'motor2.jpg',
-            'content' => 'Motor bebek cocok untuk perjalanan jauh dengan harga sewa yang ramah di kantong. Tips merawat motor sebelum sewa: periksa ban, pastikan rem berfungsi, dan oli dalam kondisi baik.'
-        ],
-        'promo-rental' => [
-            'title' => 'Promo Spesial Rental Motor',
-            'img' => 'motor3.jpg',
-            'content' => 'Dapatkan promo hemat setiap bulan! Cocok untuk mahasiswa dan wisatawan yang ingin sewa motor murah dan cepat. Cek selalu promo di website atau kontak admin untuk penawaran terbaik.'
-        ],
-        'motor-bersih' => [
-            'title' => 'Keuntungan Sewa Motor Bersih dan Terawat',
-            'img' => 'motor4.png',
-            'content' => 'Unit selalu bersih dan terawat memberikan pengalaman berkendara nyaman. Tips cek motor sebelum ambil sewa: periksa kebersihan, kondisi ban, rem, dan lampu agar perjalanan aman dan nyaman.'
-        ],
-    ];
-
-    if (!isset($articles[$slug])) {
-        abort(404);
-    }
-
-    return view('artikel.detail', ['article' => $articles[$slug]]);
-});
+// Artikel list
+Route::get('/artikel', [ArtikelUserController::class, 'index'])->name('user.artikel.index');
+Route::get('/artikel/{id}', [ArtikelUserController::class, 'show'])->name('user.artikel.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +79,14 @@ Route::resource('admin/product', ProductAdminController::class)->names([
     'update' => 'admin.product.update',
     'destroy' => 'admin.product.destroy',
 ]);
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('artikel', \App\Http\Controllers\Admin\ArtikelController::class);
-});
+
+// Admin Artikel (resource controller)
+Route::resource('admin/artikel', ArtikelAdminController::class)->names([
+    'index' => 'admin.artikel.index',
+    'create' => 'admin.artikel.create',
+    'store' => 'admin.artikel.store',
+    'show' => 'admin.artikel.show',
+    'edit' => 'admin.artikel.edit',
+    'update' => 'admin.artikel.update',
+    'destroy' => 'admin.artikel.destroy',
+]);
